@@ -202,7 +202,6 @@ var trivia = {
 };
 
 
-
 //start game when window loads:
 window.onload = function(){
 	trivia.startClick();
