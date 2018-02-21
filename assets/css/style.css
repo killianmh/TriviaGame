@@ -31,6 +31,23 @@ div{
 	margin: 5px;
 }
 
+.imageRowDiv{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	text-align: center;
+
+}
+
+.imageColDiv{
+
+}
+
+.answerImage{
+	height: 250px;
+	width: auto;
+}
+
 .startbtnRow{
 	position: absolute;
 	width: 100%;

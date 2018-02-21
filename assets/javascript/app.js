@@ -53,11 +53,32 @@ var trivia = {
 	answers: [],
 	rand: 0,
 
+	start: function(){
+		var emptyDivLeft =$("<div>");
+		emptyDivLeft.addClass("col-md-4");
+		$(".startbtnRow").append(emptyDivLeft);
+
+		var startBtnCol = $("<div>");
+		startBtnCol.addClass("col-md-4 startBtnCol");
+		$(".startbtnRow").append(startBtnCol);
+		var startBtn = $("<button>");
+		startBtn.addClass("btn startbtn");
+		startBtn.text("Start");
+		$(".startBtnCol").append(startBtn);
+
+		var emptyDivRight =$("<div>");
+		emptyDivRight.addClass("col-md-4");
+		$(".startbtnRow").append(emptyDivRight);
+
+		trivia.startClick();
+
+	},
+
 	startClick: function(){
 		$(".startbtn").on("click", function(){
 			console.log("poop");
 			$(".startbtn").off("click");
-			$(".startbtnRow").remove();
+			$(".startbtnRow").empty();
 			trivia.question();
 		});
 	},
@@ -67,26 +88,26 @@ var trivia = {
 		if(trivia.progress != trivia.questions.length){
 
 			// store new question and all answer options as variables
-			currentQIndex = this.pastQuestion + 1;
-			currentQuestion = this.questions[this.pastQuestion + 1].q;
-			rightAnswer = this.questions[this.pastQuestion + 1].right;
-			wrongAnswer1 = this.questions[this.pastQuestion + 1].wrong1;
-			wrongAnswer2 = this.questions[this.pastQuestion + 1].wrong2;
-			wrongAnswer3 = this.questions[this.pastQuestion + 1].wrong3;
+			this.currentQIndex = this.pastQuestion + 1;
+			this.currentQuestion = this.questions[this.pastQuestion + 1].q;
+			this.rightAnswer = this.questions[this.pastQuestion + 1].right;
+			this.wrongAnswer1 = this.questions[this.pastQuestion + 1].wrong1;
+			this.wrongAnswer2 = this.questions[this.pastQuestion + 1].wrong2;
+			this.wrongAnswer3 = this.questions[this.pastQuestion + 1].wrong3;
 
 			// store answers in answers array:
 
 			trivia.answers = [
-					rightAnswer,
-					wrongAnswer1,
-					wrongAnswer2,
-					wrongAnswer3
+					this.rightAnswer,
+					this.wrongAnswer1,
+					this.wrongAnswer2,
+					this.wrongAnswer3
 			];
 
 			// create divs for question:
 			var questionDiv = $("<div>");
 			questionDiv.addClass("row question");
-			questionDiv.text(currentQuestion);
+			questionDiv.text(this.currentQuestion);
 			$(".box").append(questionDiv);
 
 			// create 4 columns (middle two have buttons) for optionRow1:
@@ -184,18 +205,130 @@ var trivia = {
 	},
 
 	outOfTime: function(){
+		trivia.pastQuestion = trivia.currentQIndex;
+		clearInterval(intervalId);
+		timerRunning = false;
+		trivia.time = 25;
+		$(".htmlTimer").remove();
+		$(".question").remove();
+		$(".optionRow1").empty();
+		$(".optionRow2").empty();
 
+		var messageDiv = $("<div>");
+		messageDiv.addClass("row message");
+		messageDiv.text("Out of time! The answer is " + trivia.questions[trivia.currentQIndex].right);
+		$(".box").append(messageDiv);
+
+		var imageRowDiv = $("<div>");
+		imageRowDiv.addClass("row imageRowDiv");
+		var imageDiv = $("<div>");
+		imageDiv.addClass("imageColDiv col-md-12");
+		var image = $("<img>");
+		image.addClass("answerImage")
+		image.attr("src","assets/images/frowny.jpg");
+		$(".box").append(imageRowDiv);
+		$(".imageRowDiv").append(imageDiv);
+		$(".imageColDiv").append(image);
+
+		setTimeout(this.pause,3000);
 	},
 
 	optionBtnClicks: function(){
 		$(".questionbtn").on("click", function(){
 			$(".questionbtn").off("click");
+			trivia.progress ++;
+			trivia.pastQuestion = trivia.currentQIndex;
+			clearInterval(intervalId);
+			timerRunning = false;
+			trivia.time = 25;
+			$(".htmlTimer").remove();
+			$(".question").remove();
+			$(".optionRow1").empty();
+			$(".optionRow2").empty();
+
 			console.log($(this).text());
-			if($(this).text() === trivia.questions[currentQIndex].right){
+			if($(this).text() === trivia.questions[trivia.currentQIndex].right){
 				console.log("right!");
+				trivia.right();
+			}
+			else{
+				trivia.wrong();
 			}
 
 		});
+	},
+
+	right: function(){
+		this.score ++;
+
+		var messageDiv = $("<div>");
+		messageDiv.addClass("row message");
+		messageDiv.text("Correct!");
+		$(".box").append(messageDiv);
+
+		var imageRowDiv = $("<div>");
+		imageRowDiv.addClass("row imageRowDiv");
+		var imageDiv = $("<div>");
+		imageDiv.addClass("imageColDiv col-md-12");
+		var image = $("<img>");
+		image.addClass("answerImage")
+		image.attr("src","assets/images/smiley.jpg");
+		$(".box").append(imageRowDiv);
+		$(".imageRowDiv").append(imageDiv);
+		$(".imageColDiv").append(image);
+
+		setTimeout(this.pause,3000);
+	},
+
+	wrong: function(){
+		var messageDiv = $("<div>");
+		messageDiv.addClass("row message");
+		messageDiv.text("Wrong! The answer is " + trivia.questions[trivia.currentQIndex].right);
+		$(".box").append(messageDiv);
+
+		var imageRowDiv = $("<div>");
+		imageRowDiv.addClass("row imageRowDiv");
+		var imageDiv = $("<div>");
+		imageDiv.addClass("imageColDiv col-md-12");
+		var image = $("<img>");
+		image.addClass("answerImage")
+		image.attr("src","assets/images/frowny.jpg");
+		$(".box").append(imageRowDiv);
+		$(".imageRowDiv").append(imageDiv);
+		$(".imageColDiv").append(image);
+
+		setTimeout(this.pause,3000);
+	},
+
+	pause: function(){
+		$(".box").empty();
+		trivia.question();
+	},
+
+	done: function(){
+		$(".box").empty();
+		var messageDiv = $("<div>");
+		messageDiv.addClass("row message");
+		messageDiv.text("You're final score is " + trivia.score + " Would you like to play again?");
+		$(".box").append(messageDiv);
+
+		var emptyDivLeft =$("<div>");
+		emptyDivLeft.addClass("col-md-4");
+		$(".startbtnRow").append(emptyDivLeft);
+
+		var startBtnCol = $("<div>");
+		startBtnCol.addClass("col-md-4 startBtnCol");
+		$(".startbtnRow").append(startBtnCol);
+		var startBtn = $("<button>");
+		startBtn.addClass("btn startbtn");
+		startBtn.text("Start");
+		$(".startBtnCol").append(startBtn);
+
+		var emptyDivRight =$("<div>");
+		emptyDivRight.addClass("col-md-4");
+		$(".startbtnRow").append(emptyDivRight);
+
+		trivia.startClick();
 	}
 
 
@@ -204,5 +337,5 @@ var trivia = {
 
 //start game when window loads:
 window.onload = function(){
-	trivia.startClick();
+	trivia.start();
 };
