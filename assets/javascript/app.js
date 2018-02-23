@@ -32,6 +32,14 @@ var trivia = {
 			wrong1: "wrong1",
 			wrong2: "wrong2",
 			wrong3: "wrong3"
+		 },
+
+		 {
+		 	q: "Question 5",
+			right: "right",
+			wrong1: "wrong1",
+			wrong2: "wrong2",
+			wrong3: "wrong3"
 		 }
 	],
 
@@ -54,6 +62,11 @@ var trivia = {
 	rand: 0,
 
 	start: function(){
+
+		var startBtnRow = $("<div>");
+		startBtnRow.addClass("row startbtnRow");
+		$(".box").append(startBtnRow);
+
 		var emptyDivLeft =$("<div>");
 		emptyDivLeft.addClass("col-md-4");
 		$(".startbtnRow").append(emptyDivLeft);
@@ -78,7 +91,7 @@ var trivia = {
 		$(".startbtn").on("click", function(){
 			console.log("poop");
 			$(".startbtn").off("click");
-			$(".startbtnRow").empty();
+			$(".box").empty();
 			trivia.question();
 		});
 	},
@@ -230,6 +243,9 @@ var trivia = {
 		$(".imageRowDiv").append(imageDiv);
 		$(".imageColDiv").append(image);
 
+		trivia.progress ++;
+		console.log(trivia.progress);
+
 		setTimeout(this.pause,3000);
 	},
 
@@ -237,6 +253,7 @@ var trivia = {
 		$(".questionbtn").on("click", function(){
 			$(".questionbtn").off("click");
 			trivia.progress ++;
+			console.log(trivia.progress);
 			trivia.pastQuestion = trivia.currentQIndex;
 			clearInterval(intervalId);
 			timerRunning = false;
@@ -261,6 +278,8 @@ var trivia = {
 	right: function(){
 		this.score ++;
 
+		$(".scoreDisplay").empty();
+		$(".scoreDisplay").append(this.score);
 		var messageDiv = $("<div>");
 		messageDiv.addClass("row message");
 		messageDiv.text("Correct!");
@@ -306,27 +325,52 @@ var trivia = {
 	},
 
 	done: function(){
+		$(".scoreDisplay").empty();
+
 		$(".box").empty();
 		var messageDiv = $("<div>");
 		messageDiv.addClass("row message");
 		messageDiv.text("You're final score is " + trivia.score + " Would you like to play again?");
 		$(".box").append(messageDiv);
 
+		var restartBtnRow = $("<div>");
+		restartBtnRow.addClass("row restartbtnRow");
+		$(".box").append(restartBtnRow);
+
 		var emptyDivLeft =$("<div>");
 		emptyDivLeft.addClass("col-md-4");
-		$(".startbtnRow").append(emptyDivLeft);
+		$(".restartbtnRow").append(emptyDivLeft);
 
 		var startBtnCol = $("<div>");
 		startBtnCol.addClass("col-md-4 startBtnCol");
-		$(".startbtnRow").append(startBtnCol);
+		$(".restartbtnRow").append(startBtnCol);
+
 		var startBtn = $("<button>");
 		startBtn.addClass("btn startbtn");
-		startBtn.text("Start");
+		startBtn.text("Restart");
 		$(".startBtnCol").append(startBtn);
 
 		var emptyDivRight =$("<div>");
 		emptyDivRight.addClass("col-md-4");
-		$(".startbtnRow").append(emptyDivRight);
+		$(".restartbtnRow").append(emptyDivRight);
+
+		this.timerRunning = false;
+		this.score= 0;
+		this.progress= 0;
+		this.time= 25;
+
+	
+		this.currentQuestion= "";
+		this.rightAnswer= "";
+		this.wrongAnswer1="";
+		this.wrongAnswer2="";
+		this.wrongAnswer3="";
+
+		this.pastQuestion= -1;
+		this.currentQIndex= 0;
+
+		this.answers= [];
+		this.rand= 0;
 
 		trivia.startClick();
 	}

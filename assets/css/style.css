@@ -1,33 +1,50 @@
 div{
-	border: solid 1px black;
+	/*border: solid 1px black;*/
+}
+
+body{
+	background-image: url("../images/background.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-position: center center;
+
+	/*background-color: black;*/
+
 }
 
 #title{
 	font-size: 80px;
+	color: #fffdc6;
 	text-align: center;
 	width: auto;
 	height: auto;
 	margin: 0 auto;
+	background-color: #29292d;
+	/*opacity: 0.4;*/
 }
 
 .box{
 	border: solid 1px blue;
 	border-radius: 10px;
 	height: 400px;
+	margin-top: 50px;
 	margin-bottom: 10px;
 	position: relative;
+	background-color: #29292d;
 }
 
 
 /*this styles the div which displays the question*/
 .question{
 	font-size: 45px;
+	color: #fffdc6;
 	margin: 5px;
 }
 
 /*this styles the div which displays if the user quessed right*/
 .message{
 	font-size: 45px;
+	color: #fffdc6;
 	margin: 5px;
 }
 
@@ -66,14 +83,29 @@ div{
 	text-align: center;
 }
 
+.timer{
+	color: #fffdc6;
+	font-size: 20px;
+}
+
+.optionRow1{
+	height: 50px;
+	margin-bottom: 10px;
+}
+
+.optionRow2{
+	height: 50px;
+}
+
 .option{
 	font-size: 30px;
-	margin-bottom: 10px;
 	border-radius: 10px;
 }
 
 .score{
 	margin-top: 50px;
+	color: #fffdc6;
+	background-color: #29292d;
 }
 
 .quizProgress{
@@ -82,4 +114,10 @@ div{
 
 .questionbtn{
 	width: 100%;
+}
+
+.restartbtnRow{
+	position: absolute;
+	width: 100%;
+	bottom: 100px;
 }
