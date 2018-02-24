@@ -3,50 +3,56 @@ var trivia = {
 	
 	questions: [
 		{
-			q: "What is my name?",
-			right: "Matt",
-			wrong1: "Bill",
-			wrong2: "Steve",
-			wrong3: "Ted"
+			q: "Which car is currently the world's fastest production car?",
+			right: "Koenigsegg Agera",
+			wrong1: "Bugatti Veyron Super Sport",
+			wrong2: "Porsche 918 Spyder",
+			wrong3: "Hennessey Venom GT",
+			img: "koenigsegg.jpg"
 		 },
 		 
 		 {
-			q: "Question 2",
-			right: "right",
-			wrong1: "wrong1",
-			wrong2: "wrong2",
-			wrong3: "wrong3"
+			q: "Which American-built car famously won 1st, 2nd, and 3rd at the 24 Hours of Le Mans race in 1966?",
+			right: "Ford GT40",
+			wrong1: "Dodge Viper",
+			wrong2: "Chevy Corvette",
+			wrong3: "Shelby Cobra",
+			img: "fordgt40.jpg"
 		 },
 		 
 		 {
-			q: "Question 3",
-			right: "right",
-			wrong1: "wrong1",
-			wrong2: "wrong2",
-			wrong3: "wrong3"
+			q: "What year did the first Corvette come out?",
+			right: "1953",
+			wrong1: "1958",
+			wrong2: "1948",
+			wrong3: "1959",
+			img: "corvette.jpg"
 		 },
 		 
 		 {
-			q: "Question 4",
-			right: "right",
-			wrong1: "wrong1",
-			wrong2: "wrong2",
-			wrong3: "wrong3"
+			q: "How much horsepower does the Bugatti Veyron output?",
+			right: "1200 hp",
+			wrong1: "900 hp",
+			wrong2: "945 hp",
+			wrong3: "1160 hp",
+			img: "bugatti.jpg"
 		 },
 
 		 {
-		 	q: "Question 5",
-			right: "right",
-			wrong1: "wrong1",
-			wrong2: "wrong2",
-			wrong3: "wrong3"
+		 	q: "Where was the production plant for the DeLorean DMC-12?",
+			right: "Northern Ireland",
+			wrong1: "USA",
+			wrong2: "Mexico",
+			wrong3: "Italy",
+			img: "delorean.jpg"
 		 }
 	],
 
 	timerRunning: false,
 	score: 0,
 	progress: 0,
-	time: 25,
+	time: 15,
+	questionsLeft: 5,
 
 	
 	currentQuestion: "",
@@ -83,6 +89,8 @@ var trivia = {
 		emptyDivRight.addClass("col-md-4");
 		$(".startbtnRow").append(emptyDivRight);
 
+		
+
 		trivia.startClick();
 
 	},
@@ -92,6 +100,7 @@ var trivia = {
 			console.log("poop");
 			$(".startbtn").off("click");
 			$(".box").empty();
+			$(".progressDisplay").append(trivia.questionsLeft);
 			trivia.question();
 		});
 	},
@@ -221,7 +230,7 @@ var trivia = {
 		trivia.pastQuestion = trivia.currentQIndex;
 		clearInterval(intervalId);
 		timerRunning = false;
-		trivia.time = 25;
+		trivia.time = 15;
 		$(".htmlTimer").remove();
 		$(".question").remove();
 		$(".optionRow1").empty();
@@ -238,15 +247,19 @@ var trivia = {
 		imageDiv.addClass("imageColDiv col-md-12");
 		var image = $("<img>");
 		image.addClass("answerImage")
-		image.attr("src","assets/images/frowny.jpg");
+		image.attr("src","assets/images/"+ this.questions[this.currentQIndex].img);
 		$(".box").append(imageRowDiv);
 		$(".imageRowDiv").append(imageDiv);
 		$(".imageColDiv").append(image);
 
 		trivia.progress ++;
+		this.questionsLeft --;
+		$(".progressDisplay").empty();
+		$(".progressDisplay").append(this.questionsLeft);
+
 		console.log(trivia.progress);
 
-		setTimeout(this.pause,3000);
+		setTimeout(this.pause,5000);
 	},
 
 	optionBtnClicks: function(){
@@ -257,7 +270,7 @@ var trivia = {
 			trivia.pastQuestion = trivia.currentQIndex;
 			clearInterval(intervalId);
 			timerRunning = false;
-			trivia.time = 25;
+			trivia.time = 15;
 			$(".htmlTimer").remove();
 			$(".question").remove();
 			$(".optionRow1").empty();
@@ -291,12 +304,16 @@ var trivia = {
 		imageDiv.addClass("imageColDiv col-md-12");
 		var image = $("<img>");
 		image.addClass("answerImage")
-		image.attr("src","assets/images/smiley.jpg");
+		image.attr("src","assets/images/"+ this.questions[this.currentQIndex].img);
 		$(".box").append(imageRowDiv);
 		$(".imageRowDiv").append(imageDiv);
 		$(".imageColDiv").append(image);
 
-		setTimeout(this.pause,3000);
+		this.questionsLeft --;
+		$(".progressDisplay").empty();
+		$(".progressDisplay").append(this.questionsLeft);
+
+		setTimeout(this.pause,5000);
 	},
 
 	wrong: function(){
@@ -311,12 +328,16 @@ var trivia = {
 		imageDiv.addClass("imageColDiv col-md-12");
 		var image = $("<img>");
 		image.addClass("answerImage")
-		image.attr("src","assets/images/frowny.jpg");
+		image.attr("src","assets/images/"+ this.questions[this.currentQIndex].img);
 		$(".box").append(imageRowDiv);
 		$(".imageRowDiv").append(imageDiv);
 		$(".imageColDiv").append(image);
 
-		setTimeout(this.pause,3000);
+		this.questionsLeft --;
+		$(".progressDisplay").empty();
+		$(".progressDisplay").append(this.questionsLeft);
+
+		setTimeout(this.pause,5000);
 	},
 
 	pause: function(){
@@ -326,6 +347,7 @@ var trivia = {
 
 	done: function(){
 		$(".scoreDisplay").empty();
+		$(".progressDisplay").empty();
 
 		$(".box").empty();
 		var messageDiv = $("<div>");
@@ -357,7 +379,7 @@ var trivia = {
 		this.timerRunning = false;
 		this.score= 0;
 		this.progress= 0;
-		this.time= 25;
+		this.time= 15;
 
 	
 		this.currentQuestion= "";
@@ -371,6 +393,9 @@ var trivia = {
 
 		this.answers= [];
 		this.rand= 0;
+
+		this.questionsLeft = 5;
+
 
 		trivia.startClick();
 	}

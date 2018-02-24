@@ -1,64 +1,60 @@
-div{
-	/*border: solid 1px black;*/
-}
+
 
 body{
 	background-image: url("../images/background.jpg");
 	background-repeat: no-repeat;
-	background-size: 100% auto;
+	background-size: cover;
 	background-position: center center;
 
-	/*background-color: black;*/
+	color: white;;
+
+	
 
 }
 
 #title{
 	font-size: 80px;
-	color: #fffdc6;
+	
+	font-family: 'Rock Salt', cursive;
 	text-align: center;
 	width: auto;
 	height: auto;
 	margin: 0 auto;
-	background-color: #29292d;
-	/*opacity: 0.4;*/
+	background-color: rgba(0,0,0,0.8);
+	
 }
 
 .box{
-	border: solid 1px blue;
 	border-radius: 10px;
 	height: 400px;
 	margin-top: 50px;
 	margin-bottom: 10px;
 	position: relative;
-	background-color: #29292d;
+	background-color: rgba(0,0,0,0.8);
 }
 
 
 /*this styles the div which displays the question*/
 .question{
 	font-size: 45px;
-	color: #fffdc6;
 	margin: 5px;
 }
 
 /*this styles the div which displays if the user quessed right*/
 .message{
 	font-size: 45px;
-	color: #fffdc6;
 	margin: 5px;
 }
 
 .imageRowDiv{
 	position: absolute;
 	width: 100%;
-	bottom: 0;
+	bottom: 10px;
 	text-align: center;
 
 }
 
-.imageColDiv{
 
-}
 
 .answerImage{
 	height: 250px;
@@ -72,7 +68,10 @@ body{
 }
 
 .startbtn{
+	font-size: 25px;
+	border: solid 1px white;
 	width: 100%;
+	background-color: #60001f;
 }
 
 /*this styles the div which show up and display time left when a question is asked*/
@@ -95,29 +94,43 @@ body{
 
 .optionRow2{
 	height: 50px;
+	margin-bottom: 10px;
 }
 
-.option{
-	font-size: 30px;
-	border-radius: 10px;
-}
+
 
 .score{
 	margin-top: 50px;
-	color: #fffdc6;
-	background-color: #29292d;
+	border-radius: 10px;
+	height: 50px;
+	background-color: rgba(0,0,0,0.8);
+	font-size: 20px;
+	line-height: 50px;
 }
+
+
 
 .quizProgress{
 	margin-top: 50px;
+	border-radius: 10px;
+	height: 50px;
+	background-color: rgba(0,0,0,0.8);
+	font-size: 20px;
+	line-height: 50px;
+	float: right;
 }
 
 .questionbtn{
 	width: 100%;
+	font-size: 25px;
+	background-color: #60001f;
+	border: solid 1px white;
+	border-radius: 10px;
 }
 
 .restartbtnRow{
 	position: absolute;
 	width: 100%;
 	bottom: 100px;
+	
 }
